@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Student Portal</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{box-sizing:border-box;font-family:Segoe UI,Arial}
+body{
+  margin:0;
+}
+
+/* ===== LOGIN PAGE BACKGROUND ===== */
+.login-wrapper{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:
+    linear-gradient(rgba(0,0,0,0.45),rgba(0,0,0,0.45)),
+    url('https://png.pngtree.com/thumb_back/fh260/background/20250320/pngtree-a-leafy-green-tree-with-blurry-background-image_17110647.jpg');
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+}
+
+/* LOGIN BOX */
+.login-box{
+  
+  background: rgba(255,255,255,0.2);
+  width:340px;
+	color:white;
+  padding:25px;
+  border-radius:12px;
+  box-shadow:0 20px 40px rgba(0,0,0,.4);
+  backdrop-filter: blur(2px);
+};
+}
+.login-box h2{text-align:center;color:#0d6efd}
+.login-box input{
+  width:100%;
+  padding:10px;
+  margin:10px 0;
+border-radius:7px;
+border:none;
+color:green;
+}
+.login-box button{
+  width:100%;
+  padding:10px;
+  background:#0d6efd;
+  border:none;
+  color:#fff;
+  font-size:16px;
+  cursor:pointer;
+border-radius:3px;
+}
+#error{text-align:center;color:red;font-size:14px}
+
+/* ===== DASHBOARD ===== */
+.dashboard{display:none;background:#f5f7fb;min-height:100vh}
+
+/* TOP BAR */
+.topbar{
+  background:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:12px 16px;
+  box-shadow:0 2px 8px rgba(0,0,0,.1);
+}
+.profile{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.avatar{
+  min-width:42px;
+  height:42px;
+  border-radius:50%;
+  background:#0d6efd;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:11px;
+  font-weight:bold;
+}
+.site-info b{display:block}
+.status{color:green;font-size:12px}
+
+/* CONTENT */
+.container{
+  padding:15px;
+  max-width:900px;
+  margin:auto;
+}
+
+/* STUDENT CARD */
+.student-card{
+  background:#fff;
+  border-radius:10px;
+  padding:15px;
+  box-shadow:0 5px 15px rgba(0,0,0,.1);
+  margin-bottom:20px;
+}
+.student-card h3{
+  margin-top:0;
+  color:#0d6efd;
+}
+.student-card p{
+  margin:6px 0;
+  font-size:14px;
+}
+
+/* OPTIONS */
+.options{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:15px;
+}
+.option{
+  background:#fff;
+  border-radius:10px;
+  padding:20px;
+  text-align:center;
+  box-shadow:0 5px 15px rgba(0,0,0,.1);
+  cursor:pointer;
+  transition:.3s;
+}
+.option:hover{transform:translateY(-5px)}
+.option span{
+  display:block;
+  margin-top:8px;
+  font-size:14px;
+}
+
+/* LOGOUT */
+.logout{
+  background:#dc3545;
+  color:#fff;
+  border:none;
+  padding:8px 15px;
+  border-radius:5px;
+  cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+<div class="login-wrapper" id="loginBox">
+  <div class="login-box">
+<center><image src="https://lh3.googleusercontent.com/p/AF1QipPStLJUTq8Q83tTzoQ_fFNQBbP6XQK1vAu1Yzew=s1360-w1360-h1020-rw" width="100px"></center>
+    <h2>Student Login</h2>
+    <input id="studentId" placeholder="Student ID">
+    <input id="password" type="password" placeholder="Password">
+    <button onclick="login()">Login</button>
+    <p id="error"></p>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div class="dashboard" id="dashboard">
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="profile">
+      <div class="avatar" id="avatar"></div>
+      <div class="site-info">
+        <b>Student Portal</b>
+        <span class="status">🟢 Active</span>
+      </div>
+    </div>
+    <button class="logout" onclick="logout()">Logout</button>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="container">
+
+    <!-- STUDENT INFO -->
+    <div class="student-card">
+      <h3>Student Information</h3>
+      <p><b>Name:</b> <span id="stuName"></span></p>
+      <p><b>Course:</b> <span id="course"></span></p>
+      <p><b>Mobile:</b> <span id="mobile"></span></p>
+      <p><b>Admission Date:</b> <span id="admission"></span></p>
+    </div>
+
+    <!-- OPTIONS -->
+    <div class="options">
+      <div class="option">📄<span>Certificate</span></div>
+      <div class="option">🪪<span>ID Card</span></div>
+      <div class="option">💳<span>Fees Status</span></div>
+      <div class="option">📚<span>Course Details</span></div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const students = [
+  {
+    id:"STU101",
+    password:"1234",
+    name:"Suman Jana",
+    course:"Advance Computer",
+    mobile:"9907992247",
+    admission:"01-01-2025"
+  },
+  {
+    id:"STU102",
+    password:"5678",
+    name:"Amit Das",
+    course:"Tally with GST",
+    mobile:"9000000000",
+    admission:"05-01-2025"
+  }
+];
+
+function login(){
+  const id = studentId.value.trim();
+  const pass = password.value.trim();
+  const s = students.find(x => x.id === id && x.password === pass);
+
+  if(s){
+    loginBox.style.display="none";
+    dashboard.style.display="block";
+
+    stuName.innerText = s.name;
+    course.innerText = s.course;
+    mobile.innerText = s.mobile;
+    admission.innerText = s.admission;
+
+    avatar.innerText = s.id;
+  }else{
+    error.innerText="Invalid ID or Password";
+  }
+}
+
+function logout(){
+  location.reload();
+}
+</script>
+
+</body>
+</html>
